@@ -11,8 +11,8 @@ from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 
 load_dotenv()
-os.getenv("Google API Key")
-genai.configure(api_key=os.getenv("Google API Key"))
+os.getenv("AIzaSyAN2gnyYJaU0dZ7_xr89rWaSFpN5i023bA")
+genai.configure(api_key=os.getenv("AIzaSyAN2gnyYJaU0dZ7_xr89rWaSFpN5i023bA"))
 
 def get_pdf_text(pdf):
     txt=""
@@ -28,12 +28,12 @@ def get_text_chunks(txt):
     return chunks
 
 def get_vector_store(chunks):
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key="Google API Key")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key="AIzaSyAN2gnyYJaU0dZ7_xr89rWaSFpN5i023bA")
     vector_store=FAISS.from_texts(chunks,embedding=embeddings)
     vector_store.save_local("faiss.index")
 
 def get_conversational_chain():
-    genai.configure(api_key="Google API Key")
+    genai.configure(api_key="AIzaSyAN2gnyYJaU0dZ7_xr89rWaSFpN5i023bA")
     prompt_template="""
     Answer the question as detailed as Possible from peovided context make sure to provide all details,if the answer is not available
     in the provided context just say,"answer is not available in the context",don't provide the wrong answer\n\n
@@ -49,7 +49,7 @@ def get_conversational_chain():
     return chain
 
 def user_input(question):
-    embeddings=GoogleGenerativeAIEmbeddings(GOOGLE_API_KEY="Google API Key",model="models/embedding-001")
+    embeddings=GoogleGenerativeAIEmbeddings(GOOGLE_API_KEY="AIzaSyAN2gnyYJaU0dZ7_xr89rWaSFpN5i023bA",model="models/embedding-001")
 
     new_db=FAISS.load_local("faiss.index",embeddings,allow_dangerous_deserialization=True)
     docs=new_db.similarity_search(question)
